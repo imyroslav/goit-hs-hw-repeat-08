@@ -70,12 +70,6 @@ const container = document.querySelector(".gallery");
 
 container.innerHTML = createMarkUp(images);
 
-container.addEventListener("click", handleClick);
-function handleClick(event) {
-    if(event.currentTarget === event.target) return
-}
-
-
 function createMarkUp(array) {
     return array.map(({ preview, original, description }) => `
     <li class="gallery-item">
@@ -91,8 +85,17 @@ function createMarkUp(array) {
     ).join("")
 }
 
+container.addEventListener("click", handleClick);
 
+function handleClick(event) {
+  event.preventDefault();
+  const instance = basicLightbox.create(`
+	<img
+    src="${event.target.dataset.source}"
+    alt="${event.target.alt}" 
+  />
+`)
+  
+instance.show()
+}
 
-
-
-console.log(container)
